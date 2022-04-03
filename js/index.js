@@ -3,7 +3,7 @@ let tasks = [
   { text: "Pick up Tom from airport", done: false },
   { text: "Visit party", done: false },
   { text: "Visit doctor", done: true },
-  { text: "Buy meat", done: true},
+  { text: "Buy meat", done: true },
 ];
 
 // змінні
@@ -18,7 +18,9 @@ const renderItems = (array) => {
   array.map((item) => {
     return listItems.insertAdjacentHTML(
       "beforeend",
-      `<li class="list__item ${item.done ? "list__item_done" : "list__item"}">
+      `<li id="${item.text}" class="list__item ${
+        item.done ? "list__item_done" : "list__item"
+      }">
         <input class="list__item-checkbox" type="checkbox" ${
           item.done ? "checked" : false
         }>
@@ -40,18 +42,25 @@ const createTask = () => {
   localStorage.setItem("listTasks", JSON.stringify(tasks));
   listItems.insertAdjacentHTML(
     "afterbegin",
-    `<li class="list__item ${taskItem.done ? "list__item_done" : "list__item"}">
+    `<li id="${taskItem.text}" class="list__item ${
+      taskItem.done ? "list__item_done" : "list__item"
+    }">
         <input class="list__item-checkbox" type="checkbox" ${
           taskItem.done ? "checked" : false
         }>
         ${taskItem.text}
         </li>`
   );
+  checkboxes.map((item) => item.addEventListener("click", onChecked));
   taskInput.value = "";
 };
 
 const onChecked = (event) => {
-  console.log(tasks.find(item => item.text === event.currentTarget.parentNode.textContent))  
+  let checkedItem = tasks.find(
+    (item) => item.text === event.currentTarget.parentNode.getAttribute("id")
+  );
+  checkedItem.done = !checkedItem.done;
+  localStorage.setItem("listTasks", JSON.stringify(tasks));
   event.currentTarget.parentNode.classList.toggle("list__item_done");
 };
 
