@@ -51,7 +51,7 @@ const createTask = () => {
         ${taskItem.text}
         </li>`
   );
-  checkboxes.map((item) => item.addEventListener("click", onChecked));
+  [...document.querySelectorAll(".list__item-checkbox")].map((item) => item.addEventListener("click", onChecked));
   taskInput.value = "";
 };
 
@@ -75,7 +75,7 @@ if (JSON.parse(localStorage.getItem("listTasks"))) {
   renderItems(tasks);
 }
 
-const checkboxes = [...document.querySelectorAll(".list__item-checkbox")];
+
 taskInput.addEventListener("input", onChangeInput);
 submitBtn.addEventListener("click", createTask);
-checkboxes.map((item) => item.addEventListener("click", onChecked));
+[...document.querySelectorAll(".list__item-checkbox")].map((item) => item.addEventListener("click", onChecked));
